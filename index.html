@@ -1,1 +1,26 @@
-@file:///workspace/jadwal-yawmi.html
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>جدولي اليومي</title>
+</head>
+<body>
+<p id="s">جارٍ فتح الجدول…</p>
+<script>
+(async function () {
+  var n = 5;
+  var parts = [];
+  for (var i = 0; i < n; i++) {
+    var r = await fetch("./jp" + i + ".txt", { cache: "no-store" });
+    if (!r.ok) throw new Error("jp" + i + " HTTP " + r.status);
+    parts.push(await r.text());
+  }
+  document.open();
+  document.write(parts.join(""));
+  document.close();
+})().catch(function (e) {
+  document.getElementById("s").textContent = "تعذر فتح الصفحة: " + e;
+});
+</script>
+</body>
+</html>
